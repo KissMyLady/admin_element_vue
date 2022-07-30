@@ -54,23 +54,21 @@ export const constantRoutes = [
 ]
 
 
-//默认admin路由
+//异步, admin角色的路由
 export const asyncRoutes = [
   {
     path: '/example',
     component: Layout,
     redirect: '/example/list',
     name: 'Example',
-    meta: {
-      title: 'Example',
-      icon: 'el-icon-s-help'
-    },
+    meta: {title: 'Example', icon: 'el-icon-s-help'},
     children: [
       {
         path: 'list',
         component: () => import('@/views/example/list'),
         name: 'ArticleList',
-        meta: { title: 'Article List', icon: 'list' }
+        meta: { title: 'Article List', icon: 'list' },
+        menu: "example"
       }
     ]
   },

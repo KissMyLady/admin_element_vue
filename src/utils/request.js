@@ -1,12 +1,19 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import {MessageBox, Message} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
+
+import {
+  baseURL, requestTimeout, contentType
+} from "@/settings"
 
 
 const service = axios.create({
-  baseURL: "/dev-api",
-  timeout: 5000
+  baseURL,
+  timeout: requestTimeout,
+  headers: {
+    "Content-Type": contentType,
+  }
 })
 
 

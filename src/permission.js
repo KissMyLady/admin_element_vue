@@ -16,10 +16,9 @@ router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
 
-  // set page title
+  //设置页面标题
   document.title = getPageTitle(to.meta.title)
 
-  // determine whether the user has logged in
   const hasToken = getToken()
 
   if (hasToken) {
@@ -27,6 +26,8 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done();
     }
+
+    //拦截
     else {
       let roleData = store.getters.roles;
       console.log("获取用户角色a打印: ", roleData);
