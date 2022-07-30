@@ -22,7 +22,7 @@ module.exports = {
   recordRoute: false,
 
   //ids token
-  tokenName: "api-token",
+  tokenName: "The-King-Lear-token",
 
 
   //标题

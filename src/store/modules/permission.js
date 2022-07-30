@@ -1,23 +1,26 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 
-/**
- * Use meta.role to determine if the current user has permission
- * @param roles
- * @param route
- */
+
+//判断用户是否拥有此菜单
 function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
     return true
   }
+
+  //如果这个路由有menu属性,就需要判断用户是否拥有此menu权限
+  // if (route.menu) {
+  //   let menus = route;
+  //   return menus.indexOf(route.menu) > -1;
+  // } else {
+  //   return true
+  // }
+
+
 }
 
-/**
- * Filter asynchronous routing tables by recursion
- * @param routes asyncRoutes
- * @param roles
- */
+
 export function filterAsyncRoutes(routes, roles) {
   const res = []
 
@@ -59,7 +62,21 @@ const actions = {
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
-    })
+    });
+
+    // let userPermission = roles;
+    // return new Promise(resolve => {
+    //   const menus = userPermission.menuList;
+    //   //声明 该角色可用的路由
+    //   let accessedRouters
+    //   //筛选出本角色可用的路由
+    //   accessedRouters = filterAsyncRoutes(asyncRoutes, menus)
+    //   //执行设置路由的方法
+    //   commit('SET_ROUTES', accessedRouters)
+    //   resolve()
+    // })
+
+
   }
 }
 

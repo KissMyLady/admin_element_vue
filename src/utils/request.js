@@ -4,7 +4,7 @@ import store from '@/store'
 import {getToken} from '@/utils/auth'
 
 import {
-  baseURL, requestTimeout, contentType
+  baseURL, requestTimeout, contentType, tokenName
 } from "@/settings"
 
 
@@ -21,7 +21,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
+      config.headers[tokenName] = getToken()
     }
     return config
   },
