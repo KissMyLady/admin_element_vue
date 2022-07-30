@@ -25,12 +25,9 @@ router.beforeEach(async(to, from, next) => {
   if (hasToken) {
     if (to.path === '/login') {
       next({ path: '/' })
-      //router.afterEach并不是一定会执行的
-      // -> [比如当页面在首页的时候手动跳转到login页面，router.afterEach是不会被触发的]
       NProgress.done();
     }
     else {
-      // determine whether the user has obtained his permission roles through getInfo
       let roleData = store.getters.roles;
       console.log("获取用户角色a打印: ", roleData);
 
@@ -42,17 +39,16 @@ router.beforeEach(async(to, from, next) => {
       // 本地存储无用户数据, 重新获取用户信息
       else {
         try {
+          //admin
           const { roles } = await store.dispatch('user/getInfo')
-          console.log("打印获取到的用户roles数组: ", roles);
 
-          // generate accessible routes map based on roles
+          //获取路由
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
-          //拼接路由 dynamically add accessible routes
+          //拼接路由
           router.addRoutes(accessRoutes)
 
-          // hack method to ensure that addRoutes is complete
-          // set the replace: true, so the navigation will not leave a history record
+          // 将replace设置为true，这样导航将不会留下历史记录
           next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
@@ -63,14 +59,14 @@ router.beforeEach(async(to, from, next) => {
         }
       }
     }
-  } else {
-    /* has no token*/
-
+  }
+  //无token, 用户未登录
+  else {
+    //路由白名单
     if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
+      //登录, 后重定向
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
@@ -78,6 +74,5 @@ router.beforeEach(async(to, from, next) => {
 })
 
 router.afterEach(() => {
-  // finish progress bar
   NProgress.done()
 })
