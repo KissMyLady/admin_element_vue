@@ -29,28 +29,24 @@ router.beforeEach(async(to, from, next) => {
 
     //拦截
     else {
-      let roleData = store.getters.roles;
-      console.log("获取用户角色a打印: ", roleData);
-
-      const hasRoles = roleData && roleData.length > 0;
-
-      if (hasRoles) {
+      let roleData = store.getters.userId;
+      if (roleData) {
         next()
       }
       // 本地存储无用户数据, 重新获取用户信息
       else {
         try {
-          //admin
-          const { roles } = await store.dispatch('user/getInfo')
+          let sendData = {
+            "token": hasToken
+          }
+          store.dispatch('user/GetInfo', sendData).then(() => {
+            next({...to})
+          })
 
-          //获取路由
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
-          //拼接路由
-          router.addRoutes(accessRoutes)
-
-          // 将replace设置为true，这样导航将不会留下历史记录
-          next({ ...to, replace: true })
+          // const { roles } = await store.dispatch('user/getInfo')
+          // const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          // router.addRoutes(accessRoutes)
+          // next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

@@ -1,17 +1,26 @@
 import {login, logout, getInfo} from '@/api/user'
 import {getToken, setToken, removeToken} from '@/utils/auth'
 import router, {resetRouter} from '@/router'
+import store from '../../store'
+
 import {
-  api_login
+  api_login, api_getInfo
 } from "@/api/auth/LoginApi"
 
+import {default as api} from '@/utils/request'
 
 const state = {
   token: getToken(),
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+
+  nickname: "",
+  userId: "",
+  roleIds: [],
+  menus: [],
+  permissions: [],
 }
 
 const mutations = {
@@ -29,6 +38,24 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  set_userId: (state, userId) => {
+    state.userId = userId
+  },
+  SET_USER: (state, userInfo) => {
+    state.nickname = userInfo.nickname;
+    state.userId = userInfo.userId;
+    state.roleIds = userInfo.roleIds;
+    state.menus = userInfo.menuList;
+    state.permissions = userInfo.permissionList;
+    console.log("USER 内部设置userInfo 设置完毕, ", userInfo);
+  },
+  RESET_USER: (state) => {
+    state.nickname = "";
+    state.userId = "";
+    state.roleIds = [];
+    state.menus = [];
+    state.permissions = [];
   }
 }
 
@@ -89,6 +116,28 @@ const actions = {
     })
   },
 
+  GetInfo({commit, state}, sendData){
+    console.log("进入到GetInfo, 发送数据打印: ", sendData);
+
+    return new Promise((resolve, reject) => {
+      api_getInfo(sendData).then((res)=>{
+        //储存用户信息
+        commit('SET_USER', res);
+
+        //生成路由
+        store.dispatch('permission/generateRoutes', res)
+          .then(() => {
+          //生成该用户的新路由json操作完毕之后,调用vue-router的动态新增路由方法,将新路由添加
+          router.addRoutes(store.getters.addRouters)
+        })
+        resolve(res)
+      }).catch((err)=>{
+        reject(err)
+      })
+
+    })
+  },
+
   // user logout
   logout({commit, state, dispatch}) {
     return new Promise((resolve, reject) => {
@@ -131,7 +180,7 @@ const actions = {
     resetRouter()
 
     // generate accessible routes map based on roles
-    const accessRoutes = await dispatch('permission/generateRoutes', roles, {root: true})
+    const accessRoutes = await dispatch('up_permission/GenerateRoutes', roles, {root: true})
     // dynamically add accessible routes
     router.addRoutes(accessRoutes)
 

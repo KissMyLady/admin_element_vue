@@ -9,7 +9,7 @@ export function api_login(data) {
   });
 }
 
-export function getInfo(data) {
+export function api_getInfo(data) {
   return request({
     url: '/login/getInfo',
     method: 'post',
