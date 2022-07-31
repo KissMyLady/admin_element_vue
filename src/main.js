@@ -29,9 +29,13 @@ Vue.use(Element, {
   locale: enLang // 如果使用中文，无需设置，请删除
 })
 
-import {hasPermission} from "@/utils/permission";
+
+//import {hasPermission} from "@/utils/permission";
+//如果配置了这行, Vue.prototype.hasPerm = hasPermission
+//可以使用: v-if="hasPerm('file:list')"
+
+//权限: v-permission="'option:list'"
 import directives from "@/directive";
-Vue.prototype.hasPerm = hasPermission
 Vue.use(directives);
 
 // register global utility filters
