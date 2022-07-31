@@ -1,6 +1,12 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+
+    <el-form ref="loginForm"
+             :model="loginForm"
+             :rules="loginRules"
+             class="login-form"
+             autocomplete="on"
+             label-position="left">
 
       <div class="title-container">
         <h3 class="title">Login Form</h3>
@@ -8,44 +14,48 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-class="user"/>
         </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
+        <el-input ref="username"
+                  v-model="loginForm.username"
+                  placeholder="Username"
+                  name="username"
+                  type="text"
+                  tabindex="1"
+                  autocomplete="on"/>
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip v-model="capsTooltip"
+                  content="Caps lock is On"
+                  placement="right"
+                  manual>
         <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon icon-class="password"/>
           </span>
-          <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="Password"
-            name="password"
-            tabindex="2"
-            autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
+          <el-input :key="passwordType"
+                    ref="password"
+                    v-model="loginForm.password"
+                    :type="passwordType"
+                    placeholder="Password"
+                    name="password"
+                    tabindex="2"
+                    autocomplete="on"
+                    @keyup.native="checkCapslock"
+                    @blur="capsTooltip = false"
+                    @keyup.enter.native="handleLogin"
           />
           <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
           </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading"
+                 type="primary"
+                 style="width:100%;margin-bottom:30px;"
+                 @click.native.prevent="handleLogin">Login
+      </el-button>
 
       <div style="position:relative">
         <div class="tips">
@@ -57,8 +67,8 @@
           <span>Password : any</span>
         </div>
 
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
+        <el-button class="thirdparty-button" type="primary"
+                   @click="showDialog=true">Or connect with
         </el-button>
       </div>
     </el-form>
@@ -68,18 +78,18 @@
       <br>
       <br>
       <br>
-      <social-sign />
+      <social-sign/>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import {validUsername} from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
+  components: {SocialSign},
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -97,12 +107,12 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '123456',
+        password: '123456'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{required: true, trigger: 'blur', validator: validateUsername}],
+        password: [{required: true, trigger: 'blur', validator: validatePassword}]
       },
       passwordType: 'password',
       capsTooltip: false,
@@ -114,7 +124,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         const query = route.query
         if (query) {
           this.redirect = query.redirect
@@ -139,7 +149,7 @@ export default {
   },
   methods: {
     checkCapslock(e) {
-      const { key } = e
+      const {key} = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
     showPwd() {
@@ -157,13 +167,13 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
+              .then(() => {
+                this.$router.push({path: this.redirect || '/', query: this.otherQuery})
+                this.loading = false
+              })
+              .catch(() => {
+                this.loading = false
+              })
         } else {
           console.log('error submit!!')
           return false
@@ -204,8 +214,8 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
+$bg: #283443;
+$light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -248,9 +258,9 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 
 .login-container {
   min-height: 100%;

@@ -2,10 +2,13 @@
  * 全局设置
  */
 
-//let local = "http://127.0.0.1:8899/api";
+//
 
 //提供的假数据接口
-let local = "/dev-api";
+//let local = "/dev-api";
+
+let local = "http://127.0.0.1:8899/api";
+
 let linux = "https://api.mylady.top/api";
 
 module.exports = {

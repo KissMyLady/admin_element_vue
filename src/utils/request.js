@@ -35,7 +35,12 @@ service.interceptors.request.use(
 //响应拦截
 service.interceptors.response.use(
   response => {
-    const res = response.data
+    const res = response.data;
+    //console.log("响应打印: ", res);
+
+    if(res.code == 200){
+      return res.info;
+    }
 
     if (res.code !== 20000) {
       Message({
