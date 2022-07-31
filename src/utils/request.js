@@ -41,6 +41,20 @@ service.interceptors.response.use(
     if(res.code == 200){
       return res.info;
     }
+    else if (res.code === "20011") {
+      Message({
+        showClose: true,
+        message: res.msg,
+        type: 'error',
+        duration: 500,
+        onClose: () => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()// 为了重新实例化vue-router对象 避免bug
+          })
+        }
+      });
+      return Promise.reject("未登录")
+    }
 
     if (res.code !== 20000) {
       Message({

@@ -66,10 +66,10 @@ export const asyncRoutes = [
     children: [
       {
         path: 'list',
-        component: () => import('@/views/example/list'),
         name: 'ArticleList',
+        component: () => import('@/views/example/list'),
         meta: { title: 'Article List', icon: 'list' },
-        menu: "example"
+        menu: "sys_permission"
       }
     ]
   },

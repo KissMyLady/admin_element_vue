@@ -1,5 +1,13 @@
 import store from '@/store'
 
+
+export function hasPermission(permission) {
+  permission=permission.trim()
+  let myPermissions = store.getters.permissions;
+  return myPermissions.indexOf(permission) > -1;
+}
+
+
 /**
  * @param {Array} value
  * @returns {Boolean}
@@ -19,3 +27,4 @@ export default function checkPermission(value) {
     return false
   }
 }
+

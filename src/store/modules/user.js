@@ -48,7 +48,6 @@ const mutations = {
     state.roleIds = userInfo.roleIds;
     state.menus = userInfo.menuList;
     state.permissions = userInfo.permissionList;
-    console.log("USER 内部设置userInfo 设置完毕, ", userInfo);
   },
   RESET_USER: (state) => {
     state.nickname = "";

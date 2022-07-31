@@ -2,23 +2,20 @@ import { asyncRoutes, constantRoutes } from '@/router'
 
 
 //判断用户是否拥有此菜单
-function hasPermission(roles, route) {
-  // if (route.meta && route.meta.roles) {
-  //   return roles.some(role => route.meta.roles.includes(role))
-  // } else {
-  //   return true
-  // }
+function hasPermission(menus, route) {
 
-  // let menu = route.menu;
-  // console.log("判断用户是否拥有此菜单route: ", menu);
-  //
-  // if (menu) {
-  //   return route.indexOf(menu) > -1;
-  // } else {
-  //   return true
-  // }
+  console.log("如果这个路由有menu属性,就需要判断用户是否拥有此menu权限: ", route.menu);
 
-  return true;
+  if (route.menu) {
+    let judge =  menus.indexOf(route.menu);
+    let bool = judge > -1
+
+    console.log("判断judge: ", judge, " bool: ", bool);
+
+    return bool;
+  } else {
+    return true
+  }
 }
 
 function filterAsyncRouter(asyncRouterMap, menus) {
@@ -38,22 +35,6 @@ function filterAsyncRouter(asyncRouterMap, menus) {
   return accessedRouters
 }
 
-export function filterAsyncRoutes(routes, roles) {
-  const res = []
-
-  routes.forEach(route => {
-    const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
-      }
-      res.push(tmp)
-    }
-  })
-
-  return res
-}
-
 const state = {
   routes: [],     //本用户所有的路由,包括了固定的路由和下面的addRouters
   addRoutes: []  ,//本用户的角色赋予的新增的动态路由
@@ -68,20 +49,7 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, roles) {
-    // return new Promise(resolve => {
-    //   let accessedRoutes;
-    //   //默认就是admin
-    //   console.log("默认就是admin, roles 打印", roles);
-    //   if (roles.includes('admin')) {
-    //     accessedRoutes = asyncRoutes || []
-    //   } else {
-    //     accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-    //   }
-    //   commit('SET_ROUTES', accessedRoutes)
-    //   resolve(accessedRoutes)
-    // });
 
-    //生成路由
     return new Promise(resolve => {
       const menus = roles.menuList;
       //声明 该角色可用的路由
@@ -92,8 +60,7 @@ const actions = {
       console.log("generateRoutes 设置新路由: ", accessedRouters);
       commit('SET_ROUTES', accessedRouters)
       resolve()
-    })
-
+    });
 
   }
 }
