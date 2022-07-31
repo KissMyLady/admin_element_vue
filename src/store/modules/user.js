@@ -48,7 +48,6 @@ const mutations = {
     state.roleIds = userInfo.roleIds;
     state.menus = userInfo.menuList;
     state.permissions = userInfo.permissionList;
-
     state.avatar = "https://blog.mylady.top/static/books/2022/7/avatar_longZhu.jpg";
   },
   RESET_USER: (state) => {
