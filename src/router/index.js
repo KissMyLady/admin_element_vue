@@ -69,7 +69,7 @@ export const asyncRoutes = [
         name: 'ArticleList',
         component: () => import('@/views/example/list'),
         meta: { title: 'Article List', icon: 'list' },
-        menu: "sys_permission"
+        menu: "option:list"
       }
     ]
   },
