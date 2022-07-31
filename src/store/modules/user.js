@@ -48,6 +48,8 @@ const mutations = {
     state.roleIds = userInfo.roleIds;
     state.menus = userInfo.menuList;
     state.permissions = userInfo.permissionList;
+
+    state.avatar = "https://blog.mylady.top/static/books/2022/7/avatar_longZhu.jpg";
   },
   RESET_USER: (state) => {
     state.nickname = "";
@@ -80,44 +82,7 @@ const actions = {
     })
   },
 
-  // get user info
-  getInfo({commit, state}) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const {data} = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        console.log("getInfo -> 获取到的用户数据打印: ", data);
-        /*
-        * avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
-        * introduction: "I am a super administrator"
-        * name: "Super Admin"
-        * roles: ['admin']
-        * */
-        const {roles, name, avatar, introduction} = data
-
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
-
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
   GetInfo({commit, state}, sendData){
-    console.log("进入到GetInfo, 发送数据打印: ", sendData);
-
     return new Promise((resolve, reject) => {
       api_getInfo(sendData).then((res)=>{
         //储存用户信息
@@ -142,7 +107,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
+        commit('RESET_USER', [])
+
         removeToken()
         resetRouter()
 

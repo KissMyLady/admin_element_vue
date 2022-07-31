@@ -3,22 +3,18 @@ import { asyncRoutes, constantRoutes } from '@/router'
 
 //判断用户是否拥有此菜单
 function hasPermission(menus, route) {
-
-  console.log("如果这个路由有menu属性,就需要判断用户是否拥有此menu权限: ", route.menu);
-
+  //如果这个路由有menu属性,就需要判断用户是否拥有此menu权限
   if (route.menu) {
     let judge =  menus.indexOf(route.menu);
-    let bool = judge > -1
-
-    console.log("判断judge: ", judge, " bool: ", bool);
-
-    return bool;
+    return judge > -1;
   } else {
     return true
   }
 }
 
 function filterAsyncRouter(asyncRouterMap, menus) {
+
+  //路由校验
   const accessedRouters = asyncRouterMap.filter(route => {
     //filter,js语法里数组的过滤筛选方法
     if (hasPermission(menus, route)) {
@@ -31,7 +27,7 @@ function filterAsyncRouter(asyncRouterMap, menus) {
       return true
     }
     return false
-  })
+  });
   return accessedRouters
 }
 
@@ -49,15 +45,11 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, roles) {
-
     return new Promise(resolve => {
       const menus = roles.menuList;
-      //声明 该角色可用的路由
-      let accessedRouters
       //筛选出本角色可用的路由
-      accessedRouters = filterAsyncRouter(asyncRoutes, menus)
+      let accessedRouters = filterAsyncRouter(asyncRoutes, menus)
       //执行设置路由的方法
-      console.log("generateRoutes 设置新路由: ", accessedRouters);
       commit('SET_ROUTES', accessedRouters)
       resolve()
     });
