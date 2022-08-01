@@ -74,31 +74,33 @@ const actions = {
           const token = response.token;
           commit('SET_TOKEN', token);
           setToken(token)
+
+          //改变 promise 的状态为已完成. 就可以执行.then()了
           resolve()
         }).catch(error => {
+        //改变 promise 的状态为 reject, 就可以 .catch() 这个 promise 了
         reject(error)
-      })
+      });
     })
   },
 
-  GetInfo({commit, state}, sendData){
+  GetInfo({commit, state}, sendData) {
     return new Promise((resolve, reject) => {
-      api_getInfo(sendData).then((res)=>{
-        //储存用户信息
-        commit('SET_USER', res);
-
-        //生成路由
-        store.dispatch('permission/generateRoutes', res)
-          .then(() => {
-          //生成该用户的新路由json操作完毕之后,调用vue-router的动态新增路由方法,将新路由添加
-          router.addRoutes(store.getters.addRouters)
-        })
-        resolve(res)
-      }).catch((err)=>{
-        reject(err)
-      })
-
-    })
+      api_getInfo(sendData)
+        .then((res) => {
+          //储存用户信息
+          commit('SET_USER', res);
+          //生成路由
+          store.dispatch('permission/generateRoutes', res)
+            .then(() => {
+              //生成该用户的新路由json操作完毕之后,调用vue-router的动态新增路由方法,将新路由添加
+              router.addRoutes(store.getters.addRouters)
+            });
+          resolve(res);
+        }).catch((err) => {
+        reject(err);
+      });
+    });
   },
 
   // user logout
