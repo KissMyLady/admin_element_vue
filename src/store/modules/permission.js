@@ -1,11 +1,11 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import {asyncRoutes, constantRoutes} from '@/router'
 
 
 //判断用户是否拥有此菜单
 function hasPermission(menus, route) {
   //如果这个路由有menu属性,就需要判断用户是否拥有此menu权限
   if (route.menu) {
-    let judge =  menus.indexOf(route.menu);
+    let judge = menus.indexOf(route.menu);
     return judge > -1;
   } else {
     return true
@@ -33,7 +33,7 @@ function filterAsyncRouter(asyncRouterMap, menus) {
 
 const state = {
   routes: [],     //本用户所有的路由,包括了固定的路由和下面的addRouters
-  addRoutes: []  ,//本用户的角色赋予的新增的动态路由
+  addRoutes: [],//本用户的角色赋予的新增的动态路由
 }
 
 const mutations = {
@@ -44,7 +44,7 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({commit}, roles) {
     return new Promise(resolve => {
       const menus = roles.menuList;
       //筛选出本角色可用的路由
@@ -53,8 +53,16 @@ const actions = {
       commit('SET_ROUTES', accessedRouters)
       resolve()
     });
-
-  }
+  },
+  generateRoutes_up({commit}, menuList) {
+    return new Promise(resolve => {
+      //筛选出本角色可用的路由
+      let accessedRouters = filterAsyncRouter(asyncRoutes, menuList)
+      //执行设置路由的方法
+      commit('SET_ROUTES', accessedRouters)
+      resolve()
+    });
+  },
 }
 
 export default {

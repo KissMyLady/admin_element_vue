@@ -2,12 +2,8 @@
  * 全局设置
  */
 
-//
 
-//提供的假数据接口
-//let local = "/dev-api";
-
-let local = "http://127.0.0.1:8899/api";
+let local = "http://127.0.0.1:9988/api";
 
 let linux = "https://api.mylady.top/api";
 
@@ -16,6 +12,8 @@ module.exports = {
   baseURL:
     process.env.NODE_ENV === "development"
       ? local : local,
+      //? linux : local,
+
   requestTimeout: 8000,
 
   //配后端数据的接收方式 application/json;charset=UTF-8 或者
@@ -25,8 +23,7 @@ module.exports = {
   recordRoute: false,
 
   //ids token
-  tokenName: "The-King-Lear-token",
-
+  tokenName: "spider-token",
 
   //标题
   title: 'Admin-Template',
