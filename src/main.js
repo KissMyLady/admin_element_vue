@@ -30,8 +30,10 @@ Vue.use(Element, {
 })
 
 
-//import {hasPermission} from "@/utils/permission";
+import {hasPermission} from "@/utils/permission";
 //如果配置了这行, Vue.prototype.hasPerm = hasPermission
+Vue.prototype.hasPerm = hasPermission;
+
 //可以使用: v-if="hasPerm('file:list')"
 
 //权限: v-permission="'option:list'"

@@ -70,6 +70,13 @@ export const asyncRoutes = [
         component: () => import('@/views/example/list'),
         meta: { title: 'Article List', icon: 'list' },
         menu: "option"
+      },
+      {
+        path: 'user',
+        name: '用户列表',
+        component: () => import('@/views/user/user'),
+        meta: { title: 'Article List', icon: 'list' },
+        menu: "option"
       }
     ]
   },

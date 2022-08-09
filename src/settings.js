@@ -23,7 +23,7 @@ module.exports = {
   recordRoute: false,
 
   //ids token
-  tokenName: "spider-token",
+  tokenName: "token",
 
   //标题
   title: 'Admin-Template',
