@@ -3,7 +3,8 @@
     <div class="filter-container">
       <el-form>
         <el-form-item>
-          <el-button type="primary" icon="plus"
+          <el-button type="primary" plain
+                     icon="plus"
                      v-permission="'user:add'"
                      @click="showCreate">添加
           </el-button>
@@ -37,9 +38,12 @@
       <el-table-column align="center" label="最近修改时间" prop="updateTime" width="170"></el-table-column>
       <el-table-column align="center" label="管理" width="220">
         <template slot-scope="scope">
-          <el-button type="primary" icon="edit" @click="showUpdate(scope.$index)" v-permission="'user:update'">修改
+          <el-button type="primary" plain
+                     icon="edit"
+                     @click="showUpdate(scope.$index)" v-permission="'user:update'">修改
           </el-button>
-          <el-button type="danger" icon="delete" v-if="scope.row.userId!==userId "
+          <el-button type="danger" plain
+                     icon="delete" v-if="scope.row.userId!==userId "
                      @click="removeUser(scope.$index)" v-permission="'user:update'">删除
           </el-button>
         </template>
@@ -90,8 +94,13 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button v-if="dialogStatus==='create'" type="success" @click="createUser">创 建</el-button>
-        <el-button type="primary" v-else @click="updateUser">修 改</el-button>
+        <el-button v-if="dialogStatus==='create'"
+                   plain
+                   type="success"
+                   @click="createUser">创 建</el-button>
+        <el-button v-else
+                   type="primary" plain
+                   @click="updateUser">修 改</el-button>
       </div>
     </el-dialog>
 

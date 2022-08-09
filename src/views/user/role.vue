@@ -4,7 +4,7 @@
 
       <el-form>
         <el-form-item>
-          <el-button type="success"
+          <el-button type="success" plain
                      icon="plus"
                      v-permission="'role:add'"
                      @click="showCreate">添加角色
@@ -58,12 +58,12 @@
         <template slot-scope="scope">
           <div v-if="scope.row.roleName!=='管理员'">
             <el-button v-permission="'role:update'"
-                       type="primary"
+                       type="primary" plain
                        icon="edit"
                        @click="showUpdate(scope.$index)">修改
             </el-button>
             <el-button v-permission="'role:delete'"
-                       type="danger"
+                       type="danger" plain
                        icon="delete"
                        @click="removeRole(scope.$index)">删除
             </el-button>

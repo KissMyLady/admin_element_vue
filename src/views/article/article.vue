@@ -1,9 +1,13 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+
       <el-form>
         <el-form-item>
-          <el-button type="primary" icon="plus" @click="showCreate" v-permission="'article:add'">添加
+          <el-button type="primary" plain
+                     icon="plus"
+                     @click="showCreate"
+                     v-permission="'article:add'">添加
           </el-button>
         </el-form-item>
       </el-form>
@@ -20,34 +24,55 @@
       <el-table-column align="center" prop="updateTime" label="最近修改时间" width="170"/>
       <el-table-column align="center" label="管理" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" icon="edit" @click="showUpdate(scope.$index)" v-permission="'article:update'">修改
+          <el-button type="primary" plain
+                     v-permission="'article:update'"
+                     icon="edit"
+                     @click="showUpdate(scope.$index)">修改
+          </el-button>
+          <el-button type="warning" plain
+                     v-permission="'article:delete'"
+                     icon="edit"
+                     @click="showUpdate(scope.$index)">删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="listQuery.pageNum"
-        :page-size="listQuery.pageRow"
-        :total="totalCount"
-        :page-sizes="[10, 20, 50, 100]"
-        layout="total, sizes, prev, pager, next, jumper">
+    <el-pagination @size-change="handleSizeChange"
+                   @current-change="handleCurrentChange"
+                   :current-page="listQuery.pageNum"
+                   :page-size="listQuery.pageRow"
+                   :total="totalCount"
+                   :page-sizes="[10, 20, 50, 100]"
+                   layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form class="small-space" :model="tempArticle" label-position="left" label-width="60px"
+
+    <el-dialog :title="textMap[dialogStatus]"
+               :visible.sync="dialogFormVisible">
+      <el-form class="small-space"
+               :model="tempArticle"
+               label-position="left"
+               label-width="60px"
                style='width: 500px; margin-left:50px;'>
         <el-form-item label="文章">
-          <el-input type="textarea" style="width:100%" show-word-limit v-model="tempArticle.content" maxlength="100">
+          <el-input style="width:100%"
+                    type="textarea"
+                    show-word-limit
+                    v-model="tempArticle.content"
+                    maxlength="100">
           </el-input>
         </el-form-item>
       </el-form>
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button v-if="dialogStatus==='create'" type="success" @click="createArticle">创 建</el-button>
+        <el-button v-if="dialogStatus==='create'"
+                   type="success"
+                   @click="createArticle">创 建
+        </el-button>
         <el-button type="primary" v-else @click="updateArticle">修 改</el-button>
       </div>
     </el-dialog>
+
   </div>
 </template>
 <script>
