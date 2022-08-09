@@ -58,29 +58,51 @@ export const constantRoutes = [
 //异步, admin角色的路由
 export const asyncRoutes = [
   {
-    path: '/example',
+    path: '/system',
     component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
-    meta: {title: 'Example', icon: 'el-icon-s-help'},
+    redirect: '/system/article',
+    name: '功能模块',
+    meta: {title: '功能模块', icon: 'tree'},
     children: [
+     {
+        path: 'article',
+        name: '文章',
+        component: () => import('@/views/article/article'),
+        meta: {title: '文章', icon: 'list'},
+        menu: 'article'
+      },
       {
         path: 'list',
         name: 'ArticleList',
         component: () => import('@/views/example/list'),
-        meta: { title: 'Article List', icon: 'list' },
+        meta: { title: '按钮权限demo', icon: 'list' },
+        menu: "option"
+      },
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/',
+    name: '',
+    meta: {title: '用户权限', icon: 'table'},
+    children: [
+      {
+        path: '',
+        name: '用户列表',
+        component: () => import('@/views/user/user'),
+        meta: { title: '用户列表', icon: 'peoples' },
         menu: "option"
       },
       {
-        path: 'user',
-        name: '用户列表',
-        component: () => import('@/views/user/user'),
-        meta: { title: 'Article List', icon: 'list' },
+        path: 'role',
+        name: '角色权限',
+        component: () => import('@/views/user/role'),
+        meta: { title: '角色权限', icon: 'lock' },
         menu: "option"
       }
     ]
   },
-
 
   // 404页必须放在最底部
   { path: '*', redirect: '/404', hidden: true }

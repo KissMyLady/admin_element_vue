@@ -6,20 +6,24 @@
       <h3>一个需要角色权限的按钮</h3>
 
       <!--v-permission="hasPerm('option:list')"-->
+
+      <p>fileType:list权限按钮</p>
       <el-button size="small"
                  v-permission="'fileType:list'"
                  type="warning" plain
-      >fileType:list <i class="el-icon-delete"></i></el-button>
+      >fileType:list <i class="el-icon-delete"></i>fileType:list 权限</el-button>
 
+      <p>option:list 权限按钮</p>
       <el-button size="small"
                  v-permission="'option:list'"
                  type="warning" plain
-      >修改 <i class="el-icon-delete"></i></el-button>
+      >修改 <i class="el-icon-delete"></i>option:list 权限</el-button>
 
+      <p>file:list权限按钮</p>
       <el-button size="small"
                  v-permission="'file:list'"
                  type="warning" plain
-      >有按钮 <i class="el-icon-delete"></i></el-button>
+      >有按钮 <i class="el-icon-delete"></i>有 file:list 权限</el-button>
     </div>
 
 
