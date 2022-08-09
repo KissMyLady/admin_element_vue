@@ -100,6 +100,13 @@ export const asyncRoutes = [
         component: () => import('@/views/user/role'),
         meta: { title: '角色权限', icon: 'lock' },
         menu: "option"
+      },
+      {
+        path: 'permission',
+        name: '菜单权限',
+        component: () => import('@/views/user/sys_permission'),
+        meta: { title: '菜单权限', icon: 'lock' },
+        menu: "option"
       }
     ]
   },

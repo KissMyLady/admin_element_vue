@@ -29,6 +29,9 @@ Vue.use(Element, {
   locale: enLang // 如果使用中文，无需设置，请删除
 })
 
+//自定义组件
+import Vab from "@/utils/vab/vab";
+Vue.use(Vab);
 
 import {hasPermission} from "@/utils/permission";
 //如果配置了这行, Vue.prototype.hasPerm = hasPermission

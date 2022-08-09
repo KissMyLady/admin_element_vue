@@ -36,10 +36,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data;
-    //console.log("响应打印: ", res);
-
-    if(res.code == 200){
-      return res.info;
+    if(res.code === "200" || res.code === 200){
+      let info = res.info;
+      if(info){
+        return info;
+      }else {
+        return response;
+      }
     }
     else if (res.code === "20011") {
       Message({
